@@ -1,0 +1,16 @@
+{
+    "require": {
+        "twig/twig": "^1.24",
+        "silex/silex": "^1.3"
+    },
+    "scripts":{
+        "Keith":"echo 'hello from script'",
+        "phpunit":"php phpunit.phar --log-tap ./tests/log.txt",
+        "phpunit-coverage":"php phpunit.phar tests --coverage-html ./tests/coverage"
+    },
+    "autoload":{
+        "psr-4":{
+            "Keithquinndev\\":"src/"
+        }
+    }
+}
