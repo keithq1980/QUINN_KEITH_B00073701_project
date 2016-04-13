@@ -1,0 +1,38 @@
+{% extends '_employerBase.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+Employer View page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block indexNavStyle %}{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+<h3>Employer view</h3>
+    <p>
+        <a href="/logout" >Logout</a>
+    </p>
+    <p>
+        {{ name }} is logged in..
+    </p>
+    <h3>Send Job To lecturer</h3>
+    <form method="post" action="">
+        <p>
+            Job Title
+            <input type="text" name="job_title" autofocus >
+        </p>
+        <p>
+            Deadline
+            <input type="text" name="deadline">
+        </p>
+        <p>
+            Employer ID
+            <input type="text" name="empId" value = {{ id }}>
+        </p>
+        <input type="submit" value="Submit Job" >
+    </form>
+{# donwload  all CV of students when deadline expires #}
+
+{% endblock %}

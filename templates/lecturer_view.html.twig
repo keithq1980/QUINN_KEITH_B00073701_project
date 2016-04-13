@@ -1,0 +1,77 @@
+{% extends '_lecturerBase.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Lecturer View page
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block indexNavStyle %}{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+    <p>
+        {{ name }} is logged in..
+    </p>
+    {# send global message #}
+    <h3>Send Message to all students</h3>
+    <form method="post" action="/sendGlobalComment">
+        <p>
+           Type Message
+            <textarea name="textareaComment" rows="15" cols="40"  wrap="hard"></textarea>
+        </p>
+
+        <input type="submit" value="Send Message" >
+    </form>
+{#  form and table #}
+<h3>Check box beside student id to Send Message to student</h3>
+<form method="post" action="/sendPrivateComment">
+ {# can see a list of unemployed students & employed list#}
+    <h3>List of Students</h3>
+    <table>
+        <tr>
+            <th>id</th>
+            <th>first name</th>
+            <th>surname</th>
+            <th>summary</th>
+            <th>skills</th>
+            <th>photo</th>
+            <th>Employment status</th>
+        </tr>
+
+{#students = users/ users the key in users the array #}
+        {% for student in students %}
+
+            <tr>
+                <td>{{ student.id }}<input type="checkbox" name="check_id[]" value={{ student.id }}></td>
+                <td>{{ student.firstname | capitalize}}</td>
+                <td>{{ student.surname | capitalize}}</td>
+                <td>{{ student.summary }}></td>
+                <td>{{ student.skills }}</td>
+                <td><img src ="{{ student.photo }}" ></td>
+                {# change look to display employed if true else unemployed#}
+                <td>
+                    {% if student.employed == true %}
+                        <p>Employed</p>
+                    {% else %}
+                        <p>Unemployed</p>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <p>
+        Type Private Message
+        <textarea name="textareaPriavteComment" rows="15" cols="40"  wrap="hard"></textarea>
+        <input type="submit" value="Send Personal Message" >
+    </p>
+
+
+</form>
+
+
+    {# create new job description with deadline for students #}
+    {# can view all or any one student CV, post comments to all or any one about a section or general CV comment#}
+
+{% endblock %}

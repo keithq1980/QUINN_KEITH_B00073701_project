@@ -1,0 +1,66 @@
+{% extends '_studentBase.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Student View page
+{% endblock %}
+
+
+
+{# ----------------------------------------#}
+{% block main %}
+    <p xmlns="http://www.w3.org/1999/html">
+        {{ name }} is logged in..
+        {{ pdf }}
+    </p>
+
+    <p>
+        <a href="/logout" >Logout</a>
+    </p>
+
+    <h3>Please fill out CV and submit</h3>
+
+    <form method="post" action="/postFromStudent">
+{# if the student id matches the id passed in twig args display the user data #}
+    {% for student in students if student.id == id %}
+
+        <p>
+            Student ID {{ student.id }}  id args =  {{ id }}
+            <input type="text" name="id"  value = {{ student.id |e }}>
+        </p>
+
+        <p>
+            First name:
+            <input type="text" name="firstname" autofocus placeholder="John" value = {{ student.firstname }}>
+        </p>
+        <p>
+            Surname
+            <input type="text" name="surname" placeholder="Doe" value = {{ student.surname }}>
+        </p>
+        <p>
+            Summary
+            <textarea name="textareaSum" rows="15" cols="40"  wrap="hard" >{{ student.summary }}</textarea>
+        </p>
+        <p>
+            Skills
+            <textarea name="textareaSkill" rows="15" cols="40" wrap="hard"  >{{ student.skills }}</textarea>
+        </p>
+        <p>
+            Upload Photo
+            <input name="upPhoto" class="upPhoto" type="file" ><img src = {{ student.photo }} alt="">
+        </p>
+
+        <input type="submit" value="Save CV" >
+
+        <p>
+            Comments from lecturer:
+            <output>{{ student.globalcomment }} </output>
+        </p>
+        <p>
+            Personal Comments from lecturer:
+            <output>{{ student.privatecomment }} </output>
+        </p>
+    {% endfor %}
+    </form>
+
+{% endblock %}

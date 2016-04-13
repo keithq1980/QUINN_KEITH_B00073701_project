@@ -1,0 +1,33 @@
+{% extends '_lecturerBase.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Add and Delete
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block indexNavStyle %}{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+    <h3>Create Job Description</h3>
+    <form method="post" action="#">
+        <p>
+            Job Title
+            <input type="text" name="job_title" autofocus >
+        </p>
+        <p>
+            Deadline
+            <input type="text" name="deadline">
+        </p>
+        <p>
+            Employer ID
+            <input type="text" name="empId">
+        </p>
+        <input type="submit" value="Submit Job" >
+    </form>
+
+    {# create new job description with deadline for students #}
+    {# can view all or any one student CV, post comments to all or any one about a section or general CV comment#}
+
+{% endblock %}

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CDM - {% block title %}{% endblock %}</title>
+    <style>
+        @import "css/basic.css";
+        @import "css/nav.css";
+        @import "css/footer.css";
+    </style>
+</head>
+<body>
+<header>
+    <img src="images/itbCdmLogo.png" alt="mainLogo">
+</header>
+
+<nav>
+    <ul>
+        <li>
+            <a href="#" class="{% block indexNavStyle %}{% endblock %}">Lecturer Home</a>
+        </li>
+        <li>
+            <a href="#" class="{% block aboutNavStyle %}{% endblock %}">#</a>
+        </li>
+        <li>
+            <a href="#" class="{% block contactNavStyle %}{% endblock %}">#</a>
+        </li>
+        <li>
+            <a href="logout" class="{% block loginNavStyle %}{% endblock %}">Logout</a>
+        </li>
+    </ul>
+</nav>
+
+{% block main %}
+{% endblock %}
+
+<footer>
+    2016 &copy; B00073701 Year 3 PHP_ASSIGNMENT
+</footer>
+</body>
+</html>

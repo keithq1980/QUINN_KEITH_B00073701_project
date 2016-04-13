@@ -4,9 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3cd875d5e2f447e5054a1fbaff67efc0",
-    "content-hash": "9f8eddae00d70e1bcf340f07f246b76c",
+    "hash": "8dc94402cdfadabf8f16227343cc6d21",
+    "content-hash": "c994fc5f1c49343100bf87294c191b38",
     "packages": [
+        {
+            "name": "mattsmithdev/pdo-crud-for-free",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dr-matt-smith/pdo-crud-for-free.git",
+                "reference": "3bc278fab3967fdc559d97e039a569f2c86576b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dr-matt-smith/pdo-crud-for-free/zipball/3bc278fab3967fdc559d97e039a569f2c86576b9",
+                "reference": "3bc278fab3967fdc559d97e039a569f2c86576b9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~5.5|~7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mattsmithdev\\PdoCrud\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Smith",
+                    "email": "dr_matt_smith@me.com",
+                    "homepage": "http://mattsmithdev.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "make it really simply to do db crud with pdo",
+            "homepage": "https://github.com/dr-matt-smith/pdo-crud-for-free",
+            "keywords": [
+                "mattsmithdev",
+                "pdo-crud-for-free"
+            ],
+            "time": "2016-03-14 09:41:56"
+        },
         {
             "name": "pimple/pimple",
             "version": "v1.1.1",
@@ -559,9 +612,13 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "mattsmithdev/pdo-crud-for-free": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^5.6"
+    },
     "platform-dev": []
 }

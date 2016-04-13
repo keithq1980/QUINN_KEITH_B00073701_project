@@ -1,0 +1,63 @@
+{% extends '_lecturerBase.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Add and Delete
+{% endblock %}
+
+{# ----------------------------------------#}
+{% block indexNavStyle %}{% endblock %}
+
+{# ----------------------------------------#}
+{% block main %}
+    <h3>Add a new user and student</h3>
+    <form method="post" action="/addStudent">
+        <h4>Add new Student</h4>
+        <p>
+            Type students username and press add
+            <input type="text" name="username">
+            <input type="submit" value="Add a new student" >
+        </p>
+    </form>
+    <form method="post" action="/deleteStudent">
+        {# can see a list of unemployed students & employed list#}
+        <h3>List of Students</h3>
+        <table>
+            <tr>
+                <th>id</th>
+                <th>first name</th>
+                <th>surname</th>
+                <th>summary</th>
+                <th>skills</th>
+                <th>photo</th>
+                <th>Employment status</th>
+            </tr>
+
+            {#students = users/ users the key in users the array #}
+            {% for student in students %}
+                <tr>
+                    <td>{{ student.id }}<input type="checkbox" name="check_id[]" value={{ student.id }}></td>
+                    <td>{{ student.firstname | capitalize}}</td>
+                    <td>{{ student.surname | capitalize}}</td>
+                    <td>{{ student.summary }}></td>
+                    <td>{{ student.skills }}</td>
+                    <td><img src ="{{ student.photo }}" ></td>
+                    {# change look to display employed if true else unemployed#}
+                    <td>
+                        {% if student.employed == true %}
+                            <p>Employed</p>
+                        {% else %}
+                            <p>Unemployed</p>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <h4>Delete User and Student</h4>
+        <input type="submit" value="Delete Selected student" >
+    </form>
+
+    {# create new job description with deadline for students #}
+    {# can view all or any one student CV, post comments to all or any one about a section or general CV comment#}
+
+{% endblock %}

@@ -1,9 +1,24 @@
 <?php
+
 namespace Keithquinndev;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../app/config_db.php';
+require_once __DIR__ . '/../Model/User.php';
+require_once __DIR__ . '/../Model/Student.php';
+
+
+// ## below ## User not working this way, require above?????
+use Keithquinndev\User;
+use Keithquinndev\Student;
+
+/**
+ * Class MainController
+ * @package Keithquinndev
+ */
 class MainController
 {
     /**
@@ -54,14 +69,14 @@ class MainController
     /**
      * not found error page
      * @param \Silex\Application $app
-     * @param             $message
-     *
+     * @param  $message
      * @return mixed
      */
     public static function error404(Application $app, $message)
     {
+
         $argsArray = [
-            'name' => 'CDM',
+            'message' => $message,
         ];
         $templateName = '404';
         return $app['twig']->render($templateName . '.html.twig', $argsArray);
@@ -72,22 +87,56 @@ class MainController
      * @param \Silex\Application $app
      * @param $message
      * @return mixed
+     *
      */
-    public static function loginAction(Request $request, Application $app)
+    public function loginAction(Request $request, Application $app)
     {
         $argsArray = [
-            'name' => 'login'
+            'form' => 'username',
         ];
         $templateName = 'login';
         return $app['twig']->render($templateName . '.html.twig', $argsArray);
     }
 
     /**
-     *
-     * if (!isset($blogPosts[$id])) {
-     *  // generate a 404 error from within a controller...
-     *  $app->abort(404, "Post $id does not exist.");
-     * }
+     * Destroy session when user logs out!
+     * @param Application $app
      */
+    public function destroySession(Application $app)
+    {
+        $individuals = User::getAll();
+        // loop each student and set logged in to  false
+        foreach ($individuals as $individual) {
+                $individual->setLoggedIn(false);
+        }
+        // (1) Unset all of the session variables.
+        $_SESSION = [];
 
+        // (2) If it is desired to kill the session, also delete the session cookie.
+        // Note: This will destroy the session, and not just the session data!
+        if (ini_get('session.use_cookies')){
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params['path'],
+                $params['domain'],
+                $params['secure'],
+                $params['httponly']
+            );
+            // return to login page
+            $argsArray = [
+                'form' => 'username',
+            ];
+            $templateName = 'login';
+            return $app['twig']->render($templateName . '.html.twig', $argsArray);
+
+        }
+        else {
+            // (3) destroy the session.
+            session_destroy();
+
+        }
+    }
 }

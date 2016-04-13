@@ -2,17 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CDM - {% block title %}{% endblock %}</title>
-    <style>
-        @import "css/basic.css";
-        @import "css/nav.css";
-        @import "css/footer.css";
-    </style>
+<title>CDM - {% block title %}{% endblock %}</title>
+<style>
+    @import "css/basic.css";
+    @import "css/nav.css";
+    @import "css/footer.css";
+</style>
 </head>
 <body>
 <header>
     <img src="images/itbCdmLogo.png" alt="mainLogo">
 </header>
+
 <nav>
     <ul>
         <li>
@@ -25,7 +26,7 @@
             <a href="contact" class="{% block contactNavStyle %}{% endblock %}">Contact details</a>
         </li>
         <li>
-            <a href="/login" class="{% block loginNavStyle %}{% endblock %}">Login</a>
+            <a href="login" class="{% block loginNavStyle %}{% endblock %}">Login</a>
         </li>
     </ul>
 </nav>
