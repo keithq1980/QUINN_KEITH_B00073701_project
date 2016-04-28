@@ -17,34 +17,48 @@ use Symfony\Component\HttpFoundation\Tests\StringableObject;
  */
 class User extends DatabaseTable
 {
+
     /**
-     * const/defined variables for roles
+     *
+     * constaint/defined variables for user roles
+     * student = 1
+     * lecturer = 2
+     * employer = 3
      */
     const ROLE_STUDENT = 1;
     const ROLE_LECTURER = 2;
     const ROLE_EMPLOYER = 3;
     /**
+     * auto increment id
      * @var integer
      */
     public $id;
     /**
+     * username of user
      * @var string
      */
     private $username;
     /**
+     * password of user
      * @var string
      */
     private $password;
     /**
+     * role value 1,2,3
      * @var integer
      */
     private $role;
     /**
+     * is logged in
+     * true or false
      * @var boolean
      */
     private $logged_in;
 
     /**
+     * getter for logged in
+     * true if logged in
+     * false if not
      * @return boolean
      */
     public function isLoggedIn()
@@ -53,6 +67,7 @@ class User extends DatabaseTable
     }
 
     /**
+     * setter for logged in
      * @param boolean $logged_in
      */
     public function setLoggedIn($logged_in)
@@ -61,6 +76,7 @@ class User extends DatabaseTable
     }
 
     /**
+     * getter for role of each user 1,2,3
      * @return mixed
      */
     public function getRole()
@@ -69,6 +85,7 @@ class User extends DatabaseTable
     }
 
     /**
+     * setter for role
      * @param mixed $role
      */
     public function setRole($role)
@@ -77,6 +94,7 @@ class User extends DatabaseTable
     }
 
     /**
+     * getter for id
      * @return mixed
      */
     public function getId()
@@ -85,6 +103,7 @@ class User extends DatabaseTable
     }
 
     /**
+     * setter for id
      * @param mixed $id
      */
     public function setId($id)
@@ -93,6 +112,7 @@ class User extends DatabaseTable
     }
 
     /**
+     * getter for user name
      * @return mixed
      */
     public function getUsername()
@@ -101,6 +121,7 @@ class User extends DatabaseTable
     }
 
     /**
+     * setter for user name
      * @param mixed $username
      */
     public function setUsername($username)
@@ -109,6 +130,7 @@ class User extends DatabaseTable
     }
 
     /**
+     * getter for password
      * @return mixed
      */
     public function getPassword()
@@ -117,6 +139,8 @@ class User extends DatabaseTable
     }
 
     /**
+     * setter for password
+     * hash encryption
      * @param mixed $password
      */
     public function setPassword($password)
@@ -126,5 +150,4 @@ class User extends DatabaseTable
         $this->password = $hashedPassword;
 
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Main controller for routing templates - posts and gets
+ */
 namespace Keithquinndev;
 
 use Silex\Application;
@@ -10,8 +12,6 @@ require_once __DIR__ . '/../../app/config_db.php';
 require_once __DIR__ . '/../Model/User.php';
 require_once __DIR__ . '/../Model/Student.php';
 
-
-// ## below ## User not working this way, require above?????
 use Keithquinndev\User;
 use Keithquinndev\Student;
 
@@ -50,10 +50,9 @@ class MainController
     }
 
     /**
-     * render indedx page
-     * @param Request     $request
+     * render index page
+     * @param Request $request
      * @param Application $app
-     *
      * @return mixed
      */
     public function indexAction(Request $request, Application $app)
@@ -83,11 +82,10 @@ class MainController
     }
 
     /**
-     * login page
-     * @param \Silex\Application $app
-     * @param $message
+     * loggin page action function
+     * @param Request $request
+     * @param Application $app
      * @return mixed
-     *
      */
     public function loginAction(Request $request, Application $app)
     {
@@ -104,6 +102,9 @@ class MainController
      */
     public function destroySession(Application $app)
     {
+        // resume session
+        session_start();
+
         $individuals = User::getAll();
         // loop each student and set logged in to  false
         foreach ($individuals as $individual) {
@@ -111,6 +112,8 @@ class MainController
         }
         // (1) Unset all of the session variables.
         $_SESSION = [];
+        // remove all session variables
+        session_unset();
 
         // (2) If it is desired to kill the session, also delete the session cookie.
         // Note: This will destroy the session, and not just the session data!
@@ -125,16 +128,21 @@ class MainController
                 $params['secure'],
                 $params['httponly']
             );
+            // destroy the session
+            session_destroy();
             // return to login page
             $argsArray = [
-                'form' => 'username',
+                'message' => 'You have successfully been loged out.',
             ];
             $templateName = 'login';
             return $app['twig']->render($templateName . '.html.twig', $argsArray);
 
         }
         else {
-            // (3) destroy the session.
+            // remove all session variables
+            session_unset();
+
+            // destroy the session
             session_destroy();
 
         }

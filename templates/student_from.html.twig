@@ -9,13 +9,8 @@
 
 {# ----------------------------------------#}
 {% block main %}
-    <p xmlns="http://www.w3.org/1999/html">
-        {{ name }} is logged in..
-        {{ pdf }}
-    </p>
-
     <p>
-        <a href="/logout" >Logout</a>
+        {{ name }} is logged in..
     </p>
 
     <h3>Please fill out CV and submit</h3>
@@ -52,14 +47,6 @@
 
         <input type="submit" value="Save CV" >
 
-        <p>
-            Comments from lecturer:
-            <output>{{ student.globalcomment }} </output>
-        </p>
-        <p>
-            Personal Comments from lecturer:
-            <output>{{ student.privatecomment }} </output>
-        </p>
     {% endfor %}
     </form>
 

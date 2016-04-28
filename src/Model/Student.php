@@ -17,39 +17,48 @@ use Mattsmithdev\PdoCrud\DatabaseTable;
 class Student extends DatabaseTable
 {
     /**
+     * id for each student
      * @var integer
      */
     private $id;
     /**
+     * students first name
      * @var string
      */
     private $firstname;
     /**
+     * students surname
      * @var string
      */
     private $surname;
     /**
+     * cv summary section
      * @var string
      */
     private $summary;
     /**
+     * cv skills section
      * @var string
      */
     private $skills;
     /**
+     * path for student photo
      * @var string
      */
     private $photo;
     /**
+     * to all students comment
      * @var string
      */
     private $global_comment;
     /**
+     * to each student comment
      * @var string
      */
     private $private_comment;
 
     /**
+     * getter for comments to all students
      * @return string
      */
     public function getGlobalComment()
@@ -58,6 +67,7 @@ class Student extends DatabaseTable
     }
 
     /**
+     * setter for comments to all students
      * @param string $global_comment
      */
     public function setGlobalComment($global_comment)
@@ -66,6 +76,7 @@ class Student extends DatabaseTable
     }
 
     /**
+     * getter to individual student comments
      * @return string
      */
     public function getPrivateComment()
@@ -74,6 +85,7 @@ class Student extends DatabaseTable
     }
 
     /**
+     * setter to individual student comments
      * @param string $private_comment
      */
     public function setPrivateComment($private_comment)
@@ -83,6 +95,7 @@ class Student extends DatabaseTable
 
 
     /**
+     * getter for Id
      * @return int
      */
     public function getId()
@@ -91,6 +104,7 @@ class Student extends DatabaseTable
     }
 
     /**
+     * setter for id
      * @param $id
      */
     public function setId($id)
@@ -99,6 +113,7 @@ class Student extends DatabaseTable
     }
 
     /**
+     * getter for first name
      * @return string
      */
     public function getFirstname()
@@ -107,6 +122,7 @@ class Student extends DatabaseTable
     }
 
     /**
+     * setter for first name
      * @param $firstname
      */
     public function setFirstname($firstname)
@@ -115,6 +131,7 @@ class Student extends DatabaseTable
     }
 
     /**
+     * getter for surname
      * @return string
      */
     public function getSurname()
@@ -123,6 +140,7 @@ class Student extends DatabaseTable
     }
 
     /**
+     * setter for surname
      * @param $surname
      */
     public function setSurname($surname)
@@ -131,6 +149,7 @@ class Student extends DatabaseTable
     }
 
     /**
+     * getter for cv summary
      * @return string
      */
     public function getSummary()
@@ -139,6 +158,7 @@ class Student extends DatabaseTable
     }
 
     /**
+     * setter for cv summary
      * @param $summary
      */
     public function setSummary($summary)
@@ -147,6 +167,7 @@ class Student extends DatabaseTable
     }
 
     /**
+     * getter for cv skills section
      * @return string
      */
     public function getSkills()
@@ -155,6 +176,7 @@ class Student extends DatabaseTable
     }
 
     /**
+     * setter for cv skills section
      * @param $skills
      */
     public function setSkills($skills)
@@ -163,6 +185,7 @@ class Student extends DatabaseTable
     }
 
     /**
+     * getter for photo path
      * @return string
      */
     public function getPhoto()
@@ -171,6 +194,7 @@ class Student extends DatabaseTable
     }
 
     /**
+     * setter for photo path
      * @param $photo
      */
     public function setPhoto($photo)

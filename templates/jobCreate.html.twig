@@ -10,24 +10,46 @@
 
 {# ----------------------------------------#}
 {% block main %}
-    <h3>Create Job Description</h3>
-    <form method="post" action="#">
+<p>
+    Todays Date: {{ post.published_at|date("d/m/Y", false) }}
+</p>
+    <h3>jobs and Jobs</h3>
+    <form method="post" action="/jobPostAction">
+        <h3>List of jobs</h3>
+        <table>
+            <tr>
+                <th>id</th>
+                <th>company name</th>
+                <th>title</th>
+            </tr>
+            {# #}
+            {% for job in jobs %}
+                <tr>
+                    <td>{{ job.employerid }}<input type="checkbox" name="check_emp_id[]" value={{ job.empolyerid }}></td>
+                    <td>{{ job.companyname | capitalize}}</td>
+                    <td>{{ job.title | capitalize}}</td>
+                </tr>
+            {% endfor %}
+        </table>
         <p>
             Job Title
             <input type="text" name="job_title" autofocus >
         </p>
         <p>
-            Deadline
-            <input type="text" name="deadline">
+            Set Application Deadline: 
+            <br>
+            Date & Time
+
+            <input type="datetime-local" name="dateTime" >
         </p>
         <p>
-            Employer ID
+            job ID
             <input type="text" name="empId">
         </p>
         <input type="submit" value="Submit Job" >
     </form>
 
-    {# create new job description with deadline for students #}
-    {# can view all or any one student CV, post comments to all or any one about a section or general CV comment#}
+    {#  #}
+    {# #}
 
 {% endblock %}

@@ -29,9 +29,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UserViewController
 {
-
     /**
      * Post action - Displays the views on loggin success!
+     * @param Request $request
      * @param Application $app
      * @return mixed
      */
@@ -44,7 +44,7 @@ class UserViewController
             $message = 'Please enter a valid username and password';
             print_r($message);
         }
-        elseif($request->get('username') != null && $request->get('password') == null ||$request->get('username') == null && $request->get('password') != null ) {
+        elseif($request->get('username') != null && $request->get('password') == null || $request->get('username') == null && $request->get('password') != null ) {
             $message = 'Please enter a valid username and password';
             print_r($message);
         }
@@ -67,16 +67,14 @@ class UserViewController
                     // set true to user table
                     $value->setLoggedIn(true);
 
-
                     $loggedIn = $value->isLoggedIn();
                     print_r($loggedIn . ' = logged in');
-                    $this->sessionStart($username);
+                    $this->sessionStart($username, $id);
 
                     $argsArray = [
                         'name' => $username,
                         'students' => $students,
                         'id' => $id,
-
 
                     ];
                     $templateName = 'student_from';
@@ -84,11 +82,13 @@ class UserViewController
                 }
                 // role 2 lecturer
                 else if ($value->getRole()== 2) {
-                    $this->sessionStart($username);
+                    $id = $value->getId();
+                    $this->sessionStart($username, $id);
 
                     $argsArray = [
                         'name' => $username,
                         'students' => $students,
+                        'id' => $id,
 
                     ];
                     $templateName = 'lecturer_view';
@@ -98,7 +98,7 @@ class UserViewController
                 // role 3 employer
                 else if ($value->getRole()== 3) {
                     $id = $value->getId();
-                    $this->sessionStart();
+                    $this->sessionStart($username, $id);
 
                     $argsArray = [
                         'name' => $username,
@@ -107,22 +107,30 @@ class UserViewController
                     $templateName = 'employer_view';
                     return $app['twig']->render($templateName . '.html.twig', $argsArray);
                 }
-            }//if
+            }//end-if
         }
     }
 
     /**
      * Start a session and print id & page hits
+     * @param $username
+     * @param $id
      */
-    public function sessionStart($username)
+    public function sessionStart($username, $id)
     {
         session_start();
-        $_SESSION['login_user']= $username;
+        $_SESSION['id_loggedIn'] = $id;
+        $_SESSION['username'] = $username;
+        //$new_id  = session_id($id);
+        //$new_username = session_name($username) ;
+
+       // $_SESSION['login_user']= $username;
         print_r(' Username = ' . $username );
         print '<br>';
 
-        $seesionId = session_id();
-        print_r('SessionID: ' . $seesionId);
+       // $seesionId = session_id();
+        print_r('SessionID: ' . $id);
+        print_r('actual sessID =  ' . $_SESSION['id_loggedIn']);
         $pageHits = 0;
         if (isset($_SESSION['counter'])){
             $pageHits = $_SESSION['counter'];
@@ -132,45 +140,4 @@ class UserViewController
         print '<br>';
         print_r('Page hits: = ' . $pageHits);
     }
-
-    public function studentPost(Request $request, Application $app)
-    {
-        // REQUESTS submitted
-        $id = $request->get('id');
-        $firstname = $request->get('firstname');
-        $surname = $request->get('surname');
-        $textareaSum = $request->get('textareaSum');
-        $textareaSkill = $request->get('textareaSkill');
-        $upPhoto = $request->get('upPhoto');
-
-        // Setters
-        $student = Student::getOneById($id);
-        $student->setFirstname($firstname);
-        $student->setSurname($surname);
-        $student->setSummary($textareaSum);
-        $student->setSkills($textareaSkill);
-
-        if($student->getPhoto() == null ) {
-            // set default logo if none in db
-            $student->setPhoto('/images/default.png');
-        }
-        elseif($upPhoto == null ) {
-            // if none choosen keep what we have
-            $student->setPhoto($student->getPhoto());
-        }
-        else {
-            // change it to newly chosen
-            $student->setPhoto('/images/' . $upPhoto);
-        }
-
-        // Update db
-        Student::update($student);
-
-
-
-
-
-
-    }
-
 }

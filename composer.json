@@ -7,14 +7,19 @@
 
     },
     "scripts":{
+        "time":"php ./public/testTime.php",
         "seed":"php ./public/seed.php",
         "phpunit":"php phpunit.phar --log-tap ./tests/log.txt",
-        "phpunit-coverage":"php phpunit.phar tests --coverage-html ./tests/coverage"
+        "phpunit-coverage":"php phpunit.phar tests --coverage-html ./tests/coverage",
+        "phpdoc": "php phpDocumentor.phar -d ./src -t ./src/documentation",
+        "phpdoc-twig": "php phpDocumentor.phar -d ./src -t ./src/documentation --template=responsive-twig"
+
     },
     "autoload":{
         "psr-4":{
             "Keithquinndev\\":"src/Controllers",
             "Keithquinndev\\Model\\":"src/Model"
+
 
         }
     }

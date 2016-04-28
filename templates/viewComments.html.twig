@@ -1,0 +1,30 @@
+{% extends '_studentBase.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    Student View page
+{% endblock %}
+
+
+
+{# ----------------------------------------#}
+{% block main %}
+    <p>
+        {{ name }} is logged in..
+    </p>
+
+    <h3>View comments </h3>
+
+    {# if the student id matches the id passed in twig args display the user data #}
+    {% for student in students if student.id == id %}
+
+    <p>
+        Comments from lecturer:
+        <output>{{ student.globalcomment }} </output>
+    </p>
+    <p>
+        Personal Comments from lecturer:
+        <output>{{ student.privatecomment }} </output>
+    </p>
+{% endfor %}
+{% endblock %}
