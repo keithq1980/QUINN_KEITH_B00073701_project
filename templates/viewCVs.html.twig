@@ -12,7 +12,7 @@
         {{ name }} is logged in..
     </p>
     <h3>View CVs</h3>
-
+<form method="post" action="/openPDF">
     <table>
         <tr>
             <th>student id</th>
@@ -22,22 +22,14 @@
             <td> {{ cv.studentid }} -
                 {% for job in jobs if job.employerid == id %}
                     {% if timeNow > job.deadline  %}
-                <iframe id="myFrame" style="display:none" src="" height="400" width="400"></iframe>
-                <input type="button" value="Open PDF" onclick = "openPdf()"/>
-                <script type="text/javascript">
-                    function openPdf()
-                    {
-                        var omyFrame = document.getElementById("myFrame");
-                        omyFrame.style.display="block";
-                        omyFrame.src = "/../pdf/{{ cv.studentid }}.pdf";
-                    }
-                </script>
-
+                        <input type="submit" name="pdfBtn"  value="{{ cv.studentid }}.pdf" />
+                        {% else %}
+                            <input type="submit" name="pdfBtn" disabled value="{{ cv.studentid }}.pdf" />
                     {% endif %}
                 {% endfor %}
             </td>
         </tr>
         {% endfor %}
     </table>
-
+</form>
 {% endblock %}

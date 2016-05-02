@@ -49,6 +49,7 @@ $app->get('/viewCVs', 'Keithquinndev\\EmployerController::viewStudentCV');
 //-------------------------------------------- posts from employers ---
 //--------------------------------------------
 $app->post('/empSendJobDetails', 'Keithquinndev\\EmployerController::postJobDetailsToLecturer');
+$app->post('/openPDF', 'Keithquinndev\\EmployerController::postBtnPDF');
 
 // display errors 404 etc  - Page not found messages - route them to template 404
 //-------------------------------------------
