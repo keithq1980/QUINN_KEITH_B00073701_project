@@ -85,7 +85,4 @@ class Cv extends DatabaseTable
     {
         $this->id = $id;
     }
-
-
-
 }

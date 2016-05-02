@@ -125,11 +125,8 @@ class EmployerController
 
         $pdf = new \FPDF();
         // download the file
-        $pdf->Output($pdfName,'D');
+        $pdf->Output($pdfName, 'D');
 
         return $this->viewStudentCV($request, $app);
     }
 }
-
-
-

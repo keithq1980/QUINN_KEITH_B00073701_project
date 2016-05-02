@@ -8,7 +8,6 @@
 
 namespace Keithquinndev;
 
-
 require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../../app/config_db.php';
 require __DIR__ . '/../Model/User.php';
@@ -21,8 +20,6 @@ use Keithquinndev\User;
 use Keithquinndev\Student;
 use Keithquinndev\Model\Job;
 use Keithquinndev\Model\Detail;
-
-
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -110,11 +107,11 @@ class LecturerController
     {
         $globalComment = $request->get('textareaComment');
         $student = Student::getAll();
-        foreach ($student as $value){
+        foreach ($student as $value) {
             $value->setGlobalComment($globalComment);
             // Update db
             Student::update($value);
-         }
+        }
         return $this->lecturerHomeAction($request, $app);
     }
 
@@ -129,18 +126,17 @@ class LecturerController
         // get the id from check box to send comment to this id
         $getCheckedId = $request->get('check_id');
         $privateComment = $request->get('textareaPriavteComment');
-        if($privateComment == null ){
+        if ($privateComment == null) {
             echo ' no message to send - blank comment area...';
         }
         //
-        foreach($getCheckedId as $selectedId){
-            if($selectedId  == true ) {
+        foreach ($getCheckedId as $selectedId) {
+            if ($selectedId  == true) {
                 echo $selectedId ."</br>";
                 $student = Student::getOneById($selectedId);
                 $student->setPrivateComment($privateComment);
                 Student::update($student);
-            }
-            else {
+            } else {
                 echo 'You must check a student to message '."</br>";
             }
             return $this->lecturerHomeAction($request, $app);
@@ -171,14 +167,12 @@ class LecturerController
        // get the id from check box to send comment to this id
        $getId = $request->get('check_id');
        print_r($getId);
-       foreach($getId as $selectedId){
-           if($selectedId  == true ) {
+       foreach ($getId as $selectedId) {
+           if ($selectedId  == true) {
                echo $selectedId ."</br>";
                User::delete($selectedId);
                Student::delete($selectedId);
-
-           }
-           else {
+           } else {
                echo 'You must check a student to Delete '."</br>";
            }
        }
@@ -200,7 +194,7 @@ class LecturerController
         $tableID = $request->get('table_id');
 
         // if false from isset print error
-        if(!isset($employerID)) {
+        if (!isset($employerID)) {
             print_r("You must check id box to post job");
             return $this->jobDescriptionAction($request, $app);
         }
@@ -223,7 +217,7 @@ class LecturerController
 
         $parArray = date_parse($dateTimePosted_OG);
 
-        $makeTimeFromPosted = mktime( $parArray['hour'], $parArray['minute'], $parArray['second'], $parArray['month'], $parArray['day'],$parArray['year']);
+        $makeTimeFromPosted = mktime($parArray['hour'], $parArray['minute'], $parArray['second'], $parArray['month'], $parArray['day'], $parArray['year']);
         //mktime(h,m,s,month,day,year);
         echo "madeee   " . $makeTimeFromPosted ;
 
@@ -233,7 +227,7 @@ class LecturerController
         // create a new Job in db ---------------
         $job = new Job();
         // loop the check box id
-        foreach($employerID as $empID) {
+        foreach ($employerID as $empID) {
             $job->setEmployerId($empID);
         }
 
@@ -243,11 +237,10 @@ class LecturerController
 
         Job::insert($job);
         // remove posted job from details db and table
-        foreach($tableID as $tabID) {
+        foreach ($tableID as $tabID) {
             Detail::delete($tabID);
         }
 
         return $this->jobDescriptionAction($request, $app);
     }
-
 }

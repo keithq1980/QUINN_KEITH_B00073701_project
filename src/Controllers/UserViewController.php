@@ -18,8 +18,6 @@ require __DIR__. '/../Model/Student.php';
 // ## below ## User not working this way, require above?????
 use Keithquinndev\User;
 use Keithquinndev\Student;
-
-
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -40,11 +38,10 @@ class UserViewController
         // get all from db user table
         $user = User::getAll();
         // error hint for username & password
-        if($request->get('username') == null && $request->get('password') == null) {
+        if ($request->get('username') == null && $request->get('password') == null) {
             $message = 'Please enter a valid username and password';
             print_r($message);
-        }
-        elseif($request->get('username') != null && $request->get('password') == null || $request->get('username') == null && $request->get('password') != null ) {
+        } elseif ($request->get('username') != null && $request->get('password') == null || $request->get('username') == null && $request->get('password') != null) {
             $message = 'Please enter a valid username and password';
             print_r($message);
         }
@@ -59,7 +56,7 @@ class UserViewController
             $students = Student::getAll();
 
             // check username and verify hash password
-            if ($value->getUsername() == $username && $passwordverify == true ) {
+            if ($value->getUsername() == $username && $passwordverify == true) {
                 // role 1 student
                 //########
                  $id = $value->getId();
@@ -81,7 +78,7 @@ class UserViewController
                     return $app['twig']->render($templateName . '.html.twig', $argsArray);
                 }
                 // role 2 lecturer
-                else if ($value->getRole()== 2) {
+                elseif ($value->getRole()== 2) {
                     $id = $value->getId();
                     $this->sessionStart($username, $id);
 
@@ -93,10 +90,9 @@ class UserViewController
                     ];
                     $templateName = 'lecturer_view';
                     return $app['twig']->render($templateName . '.html.twig', $argsArray);
-
                 }
                 // role 3 employer
-                else if ($value->getRole()== 3) {
+                elseif ($value->getRole()== 3) {
                     $id = $value->getId();
                     $this->sessionStart($username, $id);
 
@@ -125,14 +121,14 @@ class UserViewController
         //$new_username = session_name($username) ;
 
        // $_SESSION['login_user']= $username;
-        print_r(' Username = ' . $username );
+        print_r(' Username = ' . $username);
         print '<br>';
 
        // $seesionId = session_id();
         print_r('SessionID: ' . $id);
         print_r('actual sessID =  ' . $_SESSION['id_loggedIn']);
         $pageHits = 0;
-        if (isset($_SESSION['counter'])){
+        if (isset($_SESSION['counter'])) {
             $pageHits = $_SESSION['counter'];
         }
         $pageHits++;

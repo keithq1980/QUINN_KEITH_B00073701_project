@@ -7,6 +7,7 @@
  */
 
 namespace Keithquinndev;
+
 use Mattsmithdev\PdoCrud\DatabaseTable;
 
 /**
@@ -200,5 +201,4 @@ class Student extends DatabaseTable
     {
         $this->photo = $photo;
     }
-
 }

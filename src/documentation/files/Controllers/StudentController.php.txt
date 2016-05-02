@@ -11,7 +11,6 @@ use Keithquinndev\Model\Job;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
-
 require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../../app/config_db.php';
 require_once __DIR__ . '/../Model/User.php';
@@ -22,7 +21,6 @@ require_once __DIR__ . '/../Model/Cv.php';
 use Keithquinndev\User;
 use Keithquinndev\Student;
 use Keithquinndev\Model\Cv;
-
 
 /**
  * Class StudentController
@@ -137,15 +135,13 @@ class StudentController
         $student->setSummary($textareaSum);
         $student->setSkills($textareaSkill);
 
-        if($student->getPhoto() == null ) {
+        if ($student->getPhoto() == null) {
             // set default logo if none in db
             $student->setPhoto('/images/default.png');
-        }
-        elseif($upPhoto == null ) {
+        } elseif ($upPhoto == null) {
             // if none choosen keep what we have
             $student->setPhoto($student->getPhoto());
-        }
-        else {
+        } else {
             // change it to newly chosen
             $student->setPhoto('/images/' . $upPhoto);
         }
@@ -175,19 +171,19 @@ class StudentController
         $studentByID = Student::getOneById($hiddenStudentID);
         $studentNamePdf = $studentByID->getFirstname();
         // create a pdf from http://www.fpdf.org/
-        $pdf = new \FPDF('P','mm','A4');
+        $pdf = new \FPDF('P', 'mm', 'A4');
         $pdf->AddPage();
-        $pdf->SetFont('Times','',11);
+        $pdf->SetFont('Times', '', 11);
         $pdf->Image('../public' . $studentByID->getPhoto());
-        $pdf->Cell(40,10, $studentByID->getFirstname() . ' ' . $studentByID->getSurname());
+        $pdf->Cell(40, 10, $studentByID->getFirstname() . ' ' . $studentByID->getSurname());
         $pdf->Ln();
-        $pdf->MultiCell(60,10, $studentByID->getSummary());
+        $pdf->MultiCell(60, 10, $studentByID->getSummary());
         $pdf->Ln();
-        $pdf->MultiCell(60,10, $studentByID->getskills());
+        $pdf->MultiCell(60, 10, $studentByID->getskills());
         $pdf->Ln();
         // directory to C drive myPc
         $directoryName = "C:\\laragon\\www\\QUINN_KEITH_B00073701_project\\pdf\\" . $hiddenStudentID .  ".pdf";
-        $pdf->Output($directoryName,'F');
+        $pdf->Output($directoryName, 'F');
         // add new entry to db
         $cv = new Cv();
         $cv->setEmployerid($hiddenEmpID);
@@ -198,3 +194,4 @@ class StudentController
         return $this->viewJobsList($request, $app);
     }
 }
+

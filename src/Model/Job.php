@@ -131,5 +131,4 @@ class Job extends DatabaseTable
     {
         $this->deadline = $deadline;
     }
-
 }

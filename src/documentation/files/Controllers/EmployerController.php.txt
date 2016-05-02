@@ -110,8 +110,24 @@ class EmployerController
         $templateName = 'viewCVs';
         return $app['twig']->render($templateName . '.html.twig', $argsArray);
     }
+
+    /**
+     * post button to view pdf
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function postBtnPDF(Request $request, Application $app)
+    {
+        require __DIR__ . '/../../fpdf/fpdf.php';
+
+        $pdfName = $request->get('pdfBtn');
+
+        $pdf = new \FPDF();
+        // download the file
+        $pdf->Output($pdfName, 'D');
+
+        return $this->viewStudentCV($request, $app);
+    }
 }
-
-
-
 

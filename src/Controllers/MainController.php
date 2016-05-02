@@ -73,7 +73,6 @@ class MainController
      */
     public static function error404(Application $app, $message)
     {
-
         $argsArray = [
             'message' => $message,
         ];
@@ -108,7 +107,7 @@ class MainController
         $individuals = User::getAll();
         // loop each student and set logged in to  false
         foreach ($individuals as $individual) {
-                $individual->setLoggedIn(false);
+            $individual->setLoggedIn(false);
         }
         // (1) Unset all of the session variables.
         $_SESSION = [];
@@ -117,7 +116,7 @@ class MainController
 
         // (2) If it is desired to kill the session, also delete the session cookie.
         // Note: This will destroy the session, and not just the session data!
-        if (ini_get('session.use_cookies')){
+        if (ini_get('session.use_cookies')) {
             $params = session_get_cookie_params();
             setcookie(
                 session_name(),
@@ -136,15 +135,12 @@ class MainController
             ];
             $templateName = 'login';
             return $app['twig']->render($templateName . '.html.twig', $argsArray);
-
-        }
-        else {
+        } else {
             // remove all session variables
             session_unset();
 
             // destroy the session
             session_destroy();
-
         }
     }
 }

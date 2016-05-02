@@ -108,3 +108,4 @@ class Detail extends DatabaseTable
         $this->details = $details;
     }
 }
+

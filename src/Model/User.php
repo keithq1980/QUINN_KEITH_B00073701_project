@@ -147,6 +147,5 @@ class User extends DatabaseTable
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         $this->password = $hashedPassword;
-
     }
 }
