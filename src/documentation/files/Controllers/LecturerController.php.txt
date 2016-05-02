@@ -14,11 +14,13 @@ require_once __DIR__ . '/../../app/config_db.php';
 require __DIR__ . '/../Model/User.php';
 require __DIR__. '/../Model/Student.php';
 require __DIR__. '/../Model/Job.php';
+require __DIR__. '/../Model/Detail.php';
 
 // ## below ## User not working this way, require above?????
 use Keithquinndev\User;
 use Keithquinndev\Student;
-use Keithquinndev\Job;
+use Keithquinndev\Model\Job;
+use Keithquinndev\Model\Detail;
 
 
 use Silex\Application;
@@ -86,10 +88,11 @@ class LecturerController
         session_start();
         $id = $_SESSION['id_loggedIn'];
         $username = $_SESSION['username'];
-        $students = Student::getAll();
+        $detailsFromEmp = Detail::getAll();
+
         $argsArray = [
             'name' => $username,
-            'students' => $students,
+            'empDetails' => $detailsFromEmp,
             'id' => $id,
 
         ];
@@ -190,19 +193,23 @@ class LecturerController
      */
     public function postJobAction(Request $request, Application $app)
     {
-       
         $jobTitle = $request->get('job_title');
         $dateTimePosted = $request->get('dateTime');
-        $employerID = $request->get('empId');
-        
+        $employerID = $request->get('emp_check_id');
+        $jobDetails = $request->get('textareaJobDetails');
+        $tableID = $request->get('table_id');
+
+        // if false from isset print error
+        if(!isset($employerID)) {
+            print_r("You must check id box to post job");
+            return $this->jobDescriptionAction($request, $app);
+        }
 
         //########## TIMESTAMP #############
         // replace T with space  - '   ' 
         $dateTimePosted_OG =  str_replace("T", " ", $dateTimePosted);
-        
         //print_r($dateTimePosted_OG . ' replace ');
         // print_r($dateTimePosted_OG2 . ' replace 2  ');
-
         // $timestamp = strtotime( $dateTimePosted_OG2 );
         date_default_timezone_set("Europe/Dublin");
 
@@ -225,24 +232,21 @@ class LecturerController
 
         // create a new Job in db ---------------
         $job = new Job();
-        $job->setEmployerId($employerID);
+        // loop the check box id
+        foreach($employerID as $empID) {
+            $job->setEmployerId($empID);
+        }
+
         $job->setTitle($jobTitle);
-        $job->setDetails('');
+        $job->setDetails($jobDetails);
         $job->setDeadline($makeTimeFromPosted);
 
-        if($makeTimeFromPosted > $endTime) {
-            echo "Time is a pain  "  . "\n";
-            //disable butt
-        }
-        else{
-            echo "pain pain pain  "  . "\n";
-            //enable button
-        }
-        
-       // dateTimePosted_OG_dump(( date_parse( $dateTimePosted_OG) ));
-
         Job::insert($job);
-        
+        // remove posted job from details db and table
+        foreach($tableID as $tabID) {
+            Detail::delete($tabID);
+        }
+
         return $this->jobDescriptionAction($request, $app);
     }
 

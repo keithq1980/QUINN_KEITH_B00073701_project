@@ -1,0 +1,91 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: keith_000
+ * Date: 02/05/2016
+ * Time: 01:48
+ */
+
+namespace Keithquinndev\Model;
+
+use Mattsmithdev\PdoCrud\DatabaseTable;
+
+/**
+ * Class Cv
+ * @package Keithquinndev\Model
+ */
+class Cv extends DatabaseTable
+{
+    /**
+     * auto increment id for each entry
+     * @var int
+     */
+    private $id;
+    /**
+     * student id
+     * @var int
+     */
+    private $studentid;
+    /**
+     * employer id
+     * @var int
+     */
+    private $employerid;
+
+    /**
+     * getter get student
+     * @return int
+     */
+    public function getStudentid()
+    {
+        return $this->studentid;
+    }
+
+    /**
+     * setter fo student id
+     * @param $studentid
+     */
+    public function setStudentid($studentid)
+    {
+        $this->studentid = $studentid;
+    }
+
+    /**
+     * getter employer id
+     * @return int
+     */
+    public function getEmployerid()
+    {
+        return $this->employerid;
+    }
+
+    /**
+     * setter employer id
+     * @param $employerid
+     */
+    public function setEmployerid($employerid)
+    {
+        $this->employerid = $employerid;
+    }
+
+    /**
+     * getter for id
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * setter for id
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+
+
+}

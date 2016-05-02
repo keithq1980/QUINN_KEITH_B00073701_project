@@ -1,5 +1,6 @@
 <?php
-//---------------------------- basic setup
+//------------------------------------------ basic setup
+//------------------------------------------
 require_once __DIR__ . '/../app/setup.php';
 require_once __DIR__ . '/../app/config_db.php';
 
@@ -15,7 +16,6 @@ $app->get('/login', 'Keithquinndev\\MainController::loginAction');
 $app->post('/loginAction','Keithquinndev\\UserViewController::userViews');
 $app->get('/logout', 'Keithquinndev\\MainController::destroySession');
 
-
 //-------------------------------------------- gets from student view
 //-------------------------------------------
 $app->get('/student_from', 'Keithquinndev\\StudentController::studentHomeAction');
@@ -25,13 +25,13 @@ $app->get('/viewJobs', 'Keithquinndev\\StudentController::viewJobsList');
 //-------------------------------------------- post from students -- CV ----
 //-------------------------------------------
 $app->post('/postFromStudent', 'Keithquinndev\\StudentController::studentPost');
+$app->post('/applyForJob', 'Keithquinndev\\StudentController::applicationFromStudentAction');
 
 // ------------------------------------------ gets links from lecturer view
 //-------------------------------------------
 $app->get('/lecturer_view', 'Keithquinndev\\LecturerController::lecturerHomeAction');
 $app->get('/addDelete', 'Keithquinndev\\LecturerController::addDeleteAction');
 $app->get('/jobCreate', 'Keithquinndev\\LecturerController::jobDescriptionAction');
-
 
 //------------------------------------------- post from lecturers ----
 //-------------------------------------------
@@ -41,7 +41,14 @@ $app->post('/addStudent', 'Keithquinndev\\LecturerController::addStudent');
 $app->post('/deleteStudent', 'Keithquinndev\\LecturerController::deleteStudent');
 $app->post('/jobPostAction', 'Keithquinndev\\LecturerController::postJobAction');
 
+//-------------------------------------------- gets from employer
+//--------------------------------------------
+$app->get('/employer_view', 'Keithquinndev\\EmployerController::employerHomeAction');
+$app->get('/viewCVs', 'Keithquinndev\\EmployerController::viewStudentCV');
 
+//-------------------------------------------- posts from employers ---
+//--------------------------------------------
+$app->post('/empSendJobDetails', 'Keithquinndev\\EmployerController::postJobDetailsToLecturer');
 
 // display errors 404 etc  - Page not found messages - route them to template 404
 //-------------------------------------------
@@ -50,7 +57,6 @@ $app->error(function (\Exception $e, $code) use ($app) {
     switch ($code) {
         case 404:
             $message = 'The requested page could not be found.';
-           // return \Keithquinndev\MainController::error404($app, $message);
             break;
         case 403:
             $message = 'The request is for something forbidden. Authorization will not help.';
@@ -60,7 +66,6 @@ $app->error(function (\Exception $e, $code) use ($app) {
             break;
         default:
             $message = 'We are sorry, but something went terribly wrong.';
-           // return \Keithquinndev\MainController::error404($app, $message);
     }
     return \Keithquinndev\MainController::error404($app, $message);
 });

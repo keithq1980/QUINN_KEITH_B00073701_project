@@ -7,17 +7,21 @@
  */
 namespace Keithquinndev;
 
+use Keithquinndev\Model\Job;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
-// ## below ## User not working this way, require above????? had them under and over requires ??
-use Keithquinndev\User;
-use Keithquinndev\Student;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../../app/config_db.php';
 require_once __DIR__ . '/../Model/User.php';
 require_once __DIR__ . '/../Model/Student.php';
+require_once __DIR__ . '/../Model/Cv.php';
+
+// ## below ## User not working this way, require above????? had them under and over requires ??
+use Keithquinndev\User;
+use Keithquinndev\Student;
+use Keithquinndev\Model\Cv;
 
 
 /**
@@ -87,11 +91,22 @@ class StudentController
         $id = $_SESSION['id_loggedIn'];
         $username = $_SESSION['username'];
 
-        $students = Student::getAll();
+        date_default_timezone_set("Europe/Dublin");
+
+        echo date_default_timezone_get();
+
+        $date = date_create();
+
+        $getUnixStamp = date_timestamp_get($date);
+        $timeDisplay = date_format($date, 'd-m-Y H:i:s');
+
+        $jobs = Job::getAll();
         $argsArray = [
             'name' => $username,
-            'students' => $students,
+            'jobs' => $jobs,
             'id' => $id,
+            'timeNow' => $getUnixStamp,
+            'timeDisplay' => $timeDisplay,
 
         ];
         $templateName = 'studentJobList';
@@ -139,5 +154,47 @@ class StudentController
         Student::update($student);
 
         return $this->studentHomeAction($request, $app);
+    }
+
+    /**
+     * post from student/ job application
+     * when student hits apply btn create pdf
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function applicationFromStudentAction(Request $request, Application $app)
+    {
+        require __DIR__ . '/../../fpdf/fpdf.php';
+
+        $applyButton = $request->get('applyBtn');
+        $hiddenStudentID = $request->get('studentID');
+        $hiddenEmpID = $request->get('empID');
+
+        // get student by id
+        $studentByID = Student::getOneById($hiddenStudentID);
+        $studentNamePdf = $studentByID->getFirstname();
+        // create a pdf from http://www.fpdf.org/
+        $pdf = new \FPDF('P','mm','A4');
+        $pdf->AddPage();
+        $pdf->SetFont('Times','',11);
+        $pdf->Image('../public' . $studentByID->getPhoto());
+        $pdf->Cell(40,10, $studentByID->getFirstname() . ' ' . $studentByID->getSurname());
+        $pdf->Ln();
+        $pdf->MultiCell(60,10, $studentByID->getSummary());
+        $pdf->Ln();
+        $pdf->MultiCell(60,10, $studentByID->getskills());
+        $pdf->Ln();
+        // directory to C drive myPc
+        $directoryName = "C:\\laragon\\www\\QUINN_KEITH_B00073701_project\\pdf\\" . $hiddenStudentID .  ".pdf";
+        $pdf->Output($directoryName,'F');
+        // add new entry to db
+        $cv = new Cv();
+        $cv->setEmployerid($hiddenEmpID);
+        $cv->setStudentid($hiddenStudentID);
+
+        Cv::insert($cv);
+
+        return $this->viewJobsList($request, $app);
     }
 }

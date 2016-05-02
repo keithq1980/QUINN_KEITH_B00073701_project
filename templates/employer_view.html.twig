@@ -2,7 +2,7 @@
 
 {# ----------------------------------------#}
 {% block title %}
-Employer View page
+    Employer View page
 {% endblock %}
 
 {# ----------------------------------------#}
@@ -10,28 +10,26 @@ Employer View page
 
 {# ----------------------------------------#}
 {% block main %}
-<h3>Employer view</h3>
-    <p>
-        <a href="/logout" >Logout</a>
-    </p>
-    <p>
-        {{ name }} is logged in..
-    </p>
+
+    <h3>Employer view</h3>
+        <p>
+            {{ name }} employer is logged in..
+        </p>
     <h3>Send Job To lecturer</h3>
-    <form method="post" action="">
+    <form method="post" action="/empSendJobDetails">
         <p>
             Job Title
-            <input type="text" name="job_title" autofocus >
+            <input type="text" name="jobTitle" autofocus >
         </p>
         <p>
-            Deadline
-            <input type="text" name="deadline">
+            Details about job
+            <textarea name="textareaJobDetails" rows="15" cols="40"  wrap="hard" ></textarea>
         </p>
         <p>
             Employer ID
             <input type="text" name="empId" value = {{ id }}>
         </p>
-        <input type="submit" value="Submit Job" >
+        <input type="submit" value="Send Job Details" >
     </form>
 {# donwload  all CV of students when deadline expires #}
 

@@ -13,21 +13,25 @@
 <p>
     Todays Date: {{ post.published_at|date("d/m/Y", false) }}
 </p>
-    <h3>jobs and Jobs</h3>
+    <h3>Create jobs</h3>
+    <h4>Check table id to remove when posting</h4>
+    <h4>Check ID to post</h4>
     <form method="post" action="/jobPostAction">
-        <h3>List of jobs</h3>
+        <h3>List of jobs from employers</h3>
         <table>
             <tr>
-                <th>id</th>
-                <th>company name</th>
+                <th>Table ID</th>
+                <th>Employer id</th>
                 <th>title</th>
+                <th>Details</th>
             </tr>
             {# #}
-            {% for job in jobs %}
+            {% for job in empDetails %}
                 <tr>
-                    <td>{{ job.employerid }}<input type="checkbox" name="check_emp_id[]" value={{ job.empolyerid }}></td>
-                    <td>{{ job.companyname | capitalize}}</td>
+                    <td>{{ job.id }}<input type="checkbox" name="table_id[]" value={{ job.id }}></td>
+                    <td>{{ job.employerid }}<input type="checkbox" name="emp_check_id[]" value={{ job.employerid }}></td>
                     <td>{{ job.title | capitalize}}</td>
+                    <td>{{ job.details | capitalize}}</td>
                 </tr>
             {% endfor %}
         </table>
@@ -39,17 +43,12 @@
             Set Application Deadline: 
             <br>
             Date & Time
-
             <input type="datetime-local" name="dateTime" >
         </p>
         <p>
-            job ID
-            <input type="text" name="empId">
+            Details about job
+            <textarea name="textareaJobDetails" rows="15" cols="40"  wrap="hard" ></textarea>
         </p>
         <input type="submit" value="Submit Job" >
     </form>
-
-    {#  #}
-    {# #}
-
 {% endblock %}

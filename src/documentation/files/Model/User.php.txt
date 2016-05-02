@@ -19,7 +19,6 @@ class User extends DatabaseTable
 {
 
     /**
-     *
      * constaint/defined variables for user roles
      * student = 1
      * lecturer = 2

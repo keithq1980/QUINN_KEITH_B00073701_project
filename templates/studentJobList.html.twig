@@ -5,15 +5,47 @@
     Student Job list
 {% endblock %}
 
-
-
 {# ----------------------------------------#}
 {% block main %}
     <p>
         {{ name }} is logged in..
     </p>
+    <p>
+        {{ timeDisplay }}
+    </p>
 
     <h3>Job List</h3>
+    <h4>
+        Press apply to send your CV to employer
+    </h4>
+    <h3>List of Jobs available</h3>
+    <form method="post" action="/applyForJob">
+        {# hidden post id field to use for db #}
+        <input type="hidden" name="studentID" value={{ id }} >
+    <table>
+        <tr>
+            <th>Employer</th>
+            <th>Tile</th>
+            <th>Details</th>
+            <th>Deadline</th>
+        </tr>
+        {# for each job in jobs db plus entities #}
+        {% for job in jobs %}
+            <tr>
+                <td>{{ job.employerid }} <input type="hidden" name="empID" value={{ job.employerid }} ></td>
+                <td>{{job.title | capitalize}}</td>
+                <td>{{ job.details | capitalize}}</td>
+                <td>{{ job.deadline | date }}
+                    {% if job.deadline < timeNow %}
+                        <button type="submit" name="applyBtn">Apply</button>
+                    {% else %}
+                        <button type="button" disabled >Apply</button>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    </form>
 
     {# if the student id matches the id passed in twig args display the user data #}
     {% for student in students if student.id == id %}

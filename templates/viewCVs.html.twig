@@ -1,0 +1,43 @@
+{% extends '_employerBase.html.twig' %}
+
+{# ----------------------------------------#}
+{% block title %}
+    View CV's
+{% endblock %}
+
+
+{# ----------------------------------------#}
+{% block main %}
+    <p>
+        {{ name }} is logged in..
+    </p>
+    <h3>View CVs</h3>
+
+    <table>
+        <tr>
+            <th>student id</th>
+        </tr>
+        {% for cv in cvs if cv.employerid == id %}
+        <tr>
+            <td> {{ cv.studentid }} -
+                {% for job in jobs if job.employerid == id %}
+                    {% if timeNow > job.deadline  %}
+                <iframe id="myFrame" style="display:none" src="" height="400" width="400"></iframe>
+                <input type="button" value="Open PDF" onclick = "openPdf()"/>
+                <script type="text/javascript">
+                    function openPdf()
+                    {
+                        var omyFrame = document.getElementById("myFrame");
+                        omyFrame.style.display="block";
+                        omyFrame.src = "/../pdf/{{ cv.studentid }}.pdf";
+                    }
+                </script>
+
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

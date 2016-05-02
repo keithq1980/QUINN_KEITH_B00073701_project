@@ -93,7 +93,6 @@ class Student extends DatabaseTable
         $this->private_comment = $private_comment;
     }
 
-
     /**
      * getter for Id
      * @return int
